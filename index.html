@@ -21,16 +21,26 @@
 
         <div class="quick-picks" id="quickPicks" aria-label="Condition quick picks"></div>
 
+        <h2>Camera presets</h2>
+        <div class="view-controls" id="viewControls" aria-label="Camera preset controls">
+          <button type="button" data-view="overview" class="active">Overview</button>
+          <button type="button" data-view="ear">Ear focus</button>
+          <button type="button" data-view="nose">Nose focus</button>
+          <button type="button" data-view="larynx">Larynx focus</button>
+        </div>
+
         <div class="description" id="description" role="status" aria-live="polite"></div>
 
         <h2>Legend</h2>
         <ul>
           <li><span class="dot normal"></span> Normal anatomy</li>
           <li><span class="dot highlight"></span> Highlighted pathology area</li>
+          <li><span class="dot lesion"></span> Disease marker / lesion detail</li>
         </ul>
       </aside>
 
       <main class="viewer-wrap">
+        <div id="renderMode" class="render-mode" aria-live="polite">Initializing 3D renderer…</div>
         <canvas id="viewer"></canvas>
       </main>
     </div>

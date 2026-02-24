@@ -36,6 +36,10 @@ h1 {
   font-size: 1.5rem;
 }
 
+h2 {
+  margin-bottom: 0.55rem;
+}
+
 .subhead {
   margin-top: 0.4rem;
   color: var(--subtle);
@@ -55,14 +59,16 @@ select {
   border: 1px solid #c4d2e0;
 }
 
-.quick-picks {
+.quick-picks,
+.view-controls {
   margin-top: 0.75rem;
   display: flex;
   flex-wrap: wrap;
   gap: 0.45rem;
 }
 
-.quick-picks button {
+.quick-picks button,
+.view-controls button {
   border: 1px solid #cbdaec;
   background: #f7fbff;
   color: #234;
@@ -72,7 +78,8 @@ select {
   cursor: pointer;
 }
 
-.quick-picks button.active {
+.quick-picks button.active,
+.view-controls button.active {
   background: #e5f0ff;
   border-color: #8db4ee;
   font-weight: 600;
@@ -90,6 +97,24 @@ select {
 
 .viewer-wrap {
   position: relative;
+}
+
+
+.render-mode {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 2;
+  background: #123b5cdd;
+  color: #fff;
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  letter-spacing: 0.01em;
+}
+
+.render-mode.fallback {
+  background: #8a1b2add;
 }
 
 #viewer {
@@ -113,6 +138,10 @@ select {
 
 .dot.highlight {
   background: var(--highlight);
+}
+
+.dot.lesion {
+  background: #ff3d54;
 }
 
 @media (max-width: 900px) {
