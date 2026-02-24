@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SurgiView ENT - Patient Education 3D Viewer</title>
+    <meta
+      name="description"
+      content="Interactive ENT patient education viewer with condition presets and 3D anatomical highlights."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <aside class="panel">
+        <h1>SurgiView ENT</h1>
+        <p class="subhead">Patient Education 3D Anatomy Viewer</p>
+
+        <label for="conditionSelect">Choose a condition</label>
+        <select id="conditionSelect" aria-label="Select condition"></select>
+
+        <div class="quick-picks" id="quickPicks" aria-label="Condition quick picks"></div>
+
+        <div class="description" id="description" role="status" aria-live="polite"></div>
+
+        <h2>Legend</h2>
+        <ul>
+          <li><span class="dot normal"></span> Normal anatomy</li>
+          <li><span class="dot highlight"></span> Highlighted pathology area</li>
+        </ul>
+      </aside>
+
+      <main class="viewer-wrap">
+        <canvas id="viewer"></canvas>
+      </main>
+    </div>
+
+    <script type="module" src="src/main.js"></script>
+  </body>
+</html>
