@@ -144,17 +144,82 @@ async function setupThreeScene() {
 function showFallback(error) {
   const ctx = canvas.getContext('2d');
   if (!ctx) return;
-  const width = canvas.clientWidth;
-  const height = canvas.clientHeight;
-  canvas.width = width;
-  canvas.height = height;
-  ctx.fillStyle = '#edf3fb';
-  ctx.fillRect(0, 0, width, height);
-  ctx.fillStyle = '#234';
-  ctx.font = '20px sans-serif';
-  ctx.fillText('3D preview unavailable in this environment.', 24, 50);
-  ctx.font = '14px sans-serif';
-  ctx.fillText('Condition presets and explanations remain functional.', 24, 80);
+  const structureColors = {
+    default: '#7ec8ff',
+    highlight: '#ff6b6b',
+  };
+
+  function resizeCanvas() {
+    const width = canvas.clientWidth;
+    const height = canvas.clientHeight;
+    if (canvas.width !== width || canvas.height !== height) {
+      canvas.width = width;
+      canvas.height = height;
+    }
+  }
+
+  function drawSchematic(activeStructureNames = []) {
+    resizeCanvas();
+    const { width, height } = canvas;
+
+    ctx.clearRect(0, 0, width, height);
+    ctx.fillStyle = '#edf3fb';
+    ctx.fillRect(0, 0, width, height);
+
+    const centerX = width * 0.5;
+    const centerY = height * 0.48;
+    const skullRadius = Math.min(width, height) * 0.24;
+
+    ctx.fillStyle = '#d8e2f0';
+    ctx.globalAlpha = 0.45;
+    ctx.beginPath();
+    ctx.ellipse(centerX, centerY, skullRadius * 1.05, skullRadius * 1.2, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.globalAlpha = 1;
+
+    const structures = [
+      {
+        name: 'tympanicMembrane',
+        draw() {
+          ctx.beginPath();
+          ctx.ellipse(centerX - skullRadius * 0.85, centerY - skullRadius * 0.05, skullRadius * 0.18, skullRadius * 0.14, 0, 0, Math.PI * 2);
+          ctx.fill();
+        },
+      },
+      {
+        name: 'nasalSeptum',
+        draw() {
+          ctx.fillRect(centerX - skullRadius * 0.05, centerY - skullRadius * 0.58, skullRadius * 0.1, skullRadius * 1.2);
+        },
+      },
+      {
+        name: 'vocalCord',
+        draw() {
+          ctx.beginPath();
+          ctx.ellipse(centerX, centerY + skullRadius * 0.98, skullRadius * 0.35, skullRadius * 0.12, 0, 0, Math.PI * 2);
+          ctx.fill();
+        },
+      },
+    ];
+
+    structures.forEach((structure) => {
+      const isActive = activeStructureNames.includes(structure.name);
+      ctx.fillStyle = isActive ? structureColors.highlight : structureColors.default;
+      structure.draw();
+    });
+
+    ctx.fillStyle = '#234';
+    ctx.font = '14px sans-serif';
+    ctx.fillText('Simplified anatomy view (WebGL fallback)', 20, 28);
+  }
+
+  drawSchematic();
+
+  window.addEventListener('resize', () => drawSchematic());
+  window.addEventListener('condition-selected', (event) => {
+    drawSchematic(event.detail.structures);
+  });
+
   console.warn('Three.js setup failed:', error);
 }
 
